@@ -15,13 +15,12 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 		// Load application context
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
 		rootContext.register(ApplicationContext.class);
-		rootContext.setDisplayName("ecom");
 
 		// Add context loader listener
 		servletContext.addListener(new ContextLoaderListener(rootContext));
 
 		// Declare dispatcher servlet
-		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher",
+		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("SpringDispatcher",
 				new DispatcherServlet(rootContext));
 		dispatcher.setLoadOnStartup(1);
 		dispatcher.addMapping("/");
