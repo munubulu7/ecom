@@ -39,12 +39,8 @@ public class HomeController {
         return view;
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public String error404() {
+    @ExceptionHandler(Exception.class)
+    public String error404(Exception e) {
         return "404";
-    }
-
-    public class ResourceNotFoundException extends RuntimeException {
-        private static final long serialVersionUID = 1L;
     }
 }
