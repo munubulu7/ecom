@@ -120,15 +120,20 @@
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <c:forEach items="${menus}" var="menu">
-                                <li><a href="${menu.tergetLink}">${menu.displayName}</a>
-                                    <c:if test="${menu.subMenus.size()>0}">
-                                        <ul role="menu" class="sub-menu">
-                                            <c:forEach items="${menu.subMenus}" var="subMenu">
-                                                <li><a href="${subMenu.tergetLink}">${subMenu.displayName}</a></li>
-                                            </c:forEach>
-                                        </ul>
-                                    </c:if>
-                                </li>
+                                <c:if test="${menu.active}">
+                                    <li><a href="${menu.tergetLink}">${menu.displayName}</a>
+                                        <c:if test="${menu.subMenus.size()>0}">
+                                            <ul role="menu" class="sub-menu">
+                                                <c:forEach items="${menu.subMenus}" var="subMenu">
+                                                    <c:if test="${subMenu.active}">
+                                                        <li><a href="${subMenu.tergetLink}">${subMenu.displayName}</a>
+                                                        </li>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </ul>
+                                        </c:if>
+                                    </li>
+                                </c:if>
                             </c:forEach>
                         </ul>
                     </div>

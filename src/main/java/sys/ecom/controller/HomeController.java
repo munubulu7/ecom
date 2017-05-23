@@ -20,13 +20,15 @@ public class HomeController {
             Menu menu = new Menu();
             menu.setName("Name" + i);
             menu.setDisplayName("DispName" + i);
+            menu.setActive(i==3?false:true);
             menu.setTergetLink("#");
             menu.setSubMenus(new ArrayList<SubMenu>());
-            if (i!=2) {
-                for (int j = 0; j < 3; j++) {
+            if (i != 2) {
+                for (int j = 0; j < 5; j++) {
                     SubMenu subMenu = new SubMenu();
                     subMenu.setName("Name" + j);
                     subMenu.setDisplayName("DispSubMenuName" + j);
+                    subMenu.setActive(i==j?false:true);
                     subMenu.setTergetLink("#");
                     menu.getSubMenus().add(subMenu);
                 }
