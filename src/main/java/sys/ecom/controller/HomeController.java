@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import sys.ecom.components.Brand;
 import sys.ecom.components.Catgory;
-import sys.ecom.components.SubCategory;
 import sys.ecom.components.Menu;
+import sys.ecom.components.SubCategory;
 import sys.ecom.components.SubMenu;
 
 @Controller
@@ -47,8 +48,8 @@ public class HomeController {
 			catgory.setName("Name" + i);
 			catgory.setDisplayName("CategoryName" + i);
 			catgory.setActive(i == 3 ? false : true);
-			catgory.setTergetLink("#link"+i);
 			catgory.setTargetId("link"+i);
+			catgory.setTergetLink("#"+catgory.getTargetId());
 			catgory.setSubCategories(new ArrayList<SubCategory>());
 			if (i != 2) {
 				for (int j = 0; j < 5; j++) {
@@ -63,6 +64,19 @@ public class HomeController {
 			catgories.add(catgory);
 		}
 		view.addObject("catgories", catgories);
+		
+		List<Brand> brands = new ArrayList<Brand>();
+		for (int i = 0; i < 5; i++) {
+			Brand brand = new Brand();
+			brand.setName("Name" + i);
+			brand.setDisplayName("Brand " + i);
+			brand.setActive(i == 3 ? false : true);
+			brand.setTergetLink("#");
+			brand.setQuantity(5);
+			
+			brands.add(brand);
+		}
+		view.addObject("brands", brands);
 
 		return view;
 	}

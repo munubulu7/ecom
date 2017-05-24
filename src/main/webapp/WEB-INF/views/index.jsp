@@ -307,22 +307,12 @@
 							<h2>Brands</h2>
 							<div class="brands-name">
 								<ul class="nav nav-pills nav-stacked">
-									<li><a href="#"> <span class="pull-right">(50)</span>Acne
-									</a></li>
-									<li><a href="#"> <span class="pull-right">(56)</span>Grüne
-											Erde
-									</a></li>
-									<li><a href="#"> <span class="pull-right">(27)</span>Albiro
-									</a></li>
-									<li><a href="#"> <span class="pull-right">(32)</span>Ronhill
-									</a></li>
-									<li><a href="#"> <span class="pull-right">(5)</span>Oddmolly
-									</a></li>
-									<li><a href="#"> <span class="pull-right">(9)</span>Boudestijn
-									</a></li>
-									<li><a href="#"> <span class="pull-right">(4)</span>Rösch
-											creative culture
-									</a></li>
+									<c:forEach items="${brands}" var="brand">
+										<c:if test="${brand.active}">
+											<li><a href="${brand.tergetLink}"><span
+													class="pull-right">(${brand.quantity})</span>${brand.displayName}</a></li>
+										</c:if>
+									</c:forEach>
 								</ul>
 							</div>
 						</div>
@@ -331,10 +321,10 @@
 						<div class="price-range">
 							<!--price-range-->
 							<h2>Price Range</h2>
-							<div class="well text-center">
+							<div class="well text-center" onclick="priceRange();">
 								<input type="text" class="span2" value="" data-slider-min="0"
 									data-slider-max="600" data-slider-step="5"
-									data-slider-value="[250,450]" id="sl2"><br /> <b
+									data-slider-value="[250,450]" id="sl2"> <br /> <b
 									class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
 							</div>
 						</div>
@@ -1134,5 +1124,25 @@
 	<script src="/resources/js/price-range.js"></script>
 	<script src="/resources/js/jquery.prettyPhoto.js"></script>
 	<script src="/resources/js/main.js"></script>
+	<script type="text/javascript">
+		function priceRange() {
+			//var str = $(".tooltip-inner").html();
+			//var res = str.split(" : ");
+			//alert("selected min range and max range are "+res);   
+			
+			$('.span2').data('slider').setValue([500,600]);
+		}
+		var originalVal;
+		$('.span2').slider().on('slideStart', function(ev) {
+			originalVal = $('.span2').data('slider').getValue();
+		});
+		$('.span2').slider().on('slideStop', function(ev) {
+			alert("original" + originalVal);
+			var newVal = $('.span2').data('slider').getValue();
+			if (originalVal != newVal) {
+				alert('Value Changed!' + newVal);
+			}
+		});
+	</script>
 </body>
 </html>
