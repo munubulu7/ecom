@@ -1,13 +1,13 @@
-package sys.ecom.menu;
+package sys.ecom.components;
 
 /**
  * Created by My System on 5/23/2017.
  */
 public class SubMenu {
-    String name;
-    String displayName;
-    String tergetLink;
-    boolean isActive;
+    private String name;
+    private String displayName;
+    private String tergetLink;
+    private boolean isActive;
 
     public String getName() {
         return name;

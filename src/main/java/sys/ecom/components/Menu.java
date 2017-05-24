@@ -1,4 +1,4 @@
-package sys.ecom.menu;
+package sys.ecom.components;
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ import java.util.List;
  * Created by My System on 5/23/2017.
  */
 public class Menu {
-    String name;
-    String displayName;
-    String tergetLink;
-    boolean isActive;
-    List<SubMenu> subMenus;
+    private String name;
+    private String displayName;
+    private String tergetLink;
+    private boolean isActive;
+    private List<SubMenu> subMenus;
 
     public String getName() {
         return name;

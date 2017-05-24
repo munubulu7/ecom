@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import sys.ecom.catgory.Catgory;
-import sys.ecom.catgory.SubCategory;
-import sys.ecom.menu.Menu;
-import sys.ecom.menu.SubMenu;
+import sys.ecom.components.Catgory;
+import sys.ecom.components.SubCategory;
+import sys.ecom.components.Menu;
+import sys.ecom.components.SubMenu;
 
 @Controller
 public class HomeController {
@@ -67,12 +67,12 @@ public class HomeController {
 		return view;
 	}
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public String error404() {
-        return "404";
-    }
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public String error404() {
+		return "404";
+	}
 
-    public class ResourceNotFoundException extends RuntimeException {
-        private static final long serialVersionUID = 1L;
-    }
+	public class ResourceNotFoundException extends RuntimeException {
+		private static final long serialVersionUID = 1L;
+	}
 }
