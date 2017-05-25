@@ -6,6 +6,10 @@ package sys.ecom.components;
 public class ItemImageUrl {
     private String imageURL;
 
+    public ItemImageUrl(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
     public String getImageURL() {
         return imageURL;
     }

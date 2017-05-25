@@ -13,6 +13,9 @@ public class Item {
     private String condition;
     private String brand;
     private String price;
+    private String tagLine;
+    private String btnText;
+    private String priceTagImageUrl;
     private List<ItemImageUrl> imageUrls = new ArrayList<ItemImageUrl>();
 
     public String getName() {
@@ -69,5 +72,29 @@ public class Item {
 
     public void setImageUrls(List<ItemImageUrl> imageUrls) {
         this.imageUrls = imageUrls;
+    }
+
+    public String getTagLine() {
+        return tagLine;
+    }
+
+    public void setTagLine(String tagLine) {
+        this.tagLine = tagLine;
+    }
+
+    public String getBtnText() {
+        return btnText;
+    }
+
+    public void setBtnText(String btnText) {
+        this.btnText = btnText;
+    }
+
+    public String getPriceTagImageUrl() {
+        return priceTagImageUrl;
+    }
+
+    public void setPriceTagImageUrl(String priceTagImageUrl) {
+        this.priceTagImageUrl = priceTagImageUrl;
     }
 }
