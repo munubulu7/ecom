@@ -1129,8 +1129,8 @@
 			//var str = $(".tooltip-inner").html();
 			//var res = str.split(" : ");
 			//alert("selected min range and max range are "+res);   
-			
-			$('.span2').data('slider').setValue([500,600]);
+
+			$('.span2').data('slider').setValue([ 500, 600 ]);
 		}
 		var originalVal;
 		$('.span2').slider().on('slideStart', function(ev) {
