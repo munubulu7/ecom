@@ -1,13 +1,9 @@
 package sys.ecom.test;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
+//@Entity
 public class TestData {
 
-	@Id@GeneratedValue
+	/*@Id@GeneratedValue
 	private int id;
 	private String name;
 	private String address;
@@ -44,6 +40,6 @@ public class TestData {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "Id: "+id+"\nName: "+name+"\nAddress: "+address;
-	}
+	}*/
 	
 }
