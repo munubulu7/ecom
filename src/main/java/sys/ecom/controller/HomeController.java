@@ -88,6 +88,28 @@ public class HomeController {
         amountLengthSlider.setSliderMinValue(0);
         amountLengthSlider.setSliderMaxValue(600);
         view.addObject("amountLengthSlider", amountLengthSlider);
+        
+        List<Item> recommendedItems = new ArrayList<Item>();
+        for (int i = 0; i < 3; i++) {
+        	Item recommendedItem = new Item();
+        	recommendedItem.setName("Easy Polo Black Edition"+" "+i);
+        	recommendedItem.setPrice("Rs. 50");
+        	recommendedItem.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/recommend2.jpg")));
+
+            recommendedItems.add(recommendedItem);
+        }
+        view.addObject("recommendedItems", recommendedItems);
+        
+        List<Item> recommendedActiveItems = new ArrayList<Item>();
+        for (int i = 0; i < 3; i++) {
+        	Item recommendedActiveItem = new Item();
+        	recommendedActiveItem.setName("Easy Polo Black Edition"+" "+i);
+        	recommendedActiveItem.setPrice("Rs. 50");
+        	recommendedActiveItem.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/recommend1.jpg")));
+
+        	recommendedActiveItems.add(recommendedActiveItem);
+        }
+        view.addObject("recommendedActiveItems", recommendedActiveItems);
 
         List<Item> items = new ArrayList<Item>();
         Item item = new Item();
