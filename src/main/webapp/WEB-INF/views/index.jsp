@@ -164,71 +164,70 @@
 	</header>
 	<!--/header-->
 
-	<c:if test="${items.size()!=null&&items.size()>0}">
-    <section id="slider">
-        <!--slider-->
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div id="slider-carousel" class="carousel slide"
-                         data-ride="carousel">
-                        <c:set var="i" value="0"/>
-                        <ol class="carousel-indicators">
-                            <c:forEach items="${items}">
-                                <c:choose>
-                                    <c:when test="${i==0}">
-                                        <li data-target="#slider-carousel" data-slide-to="0"
-                                            class="active"></li>
-                                        <c:set var="i" value="1"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li data-target="#slider-carousel" data-slide-to="1"></li>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                        </ol>
+	<c:if test="${items!=null&&items.size()>0}">
+		<section id="slider">
+			<!--slider-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12">
+						<div id="slider-carousel" class="carousel slide"
+							data-ride="carousel">
+							<c:set var="i" value="0" />
+							<ol class="carousel-indicators">
+								<c:forEach items="${items}">
+									<c:choose>
+										<c:when test="${i==0}">
+											<li data-target="#slider-carousel" data-slide-to="0"
+												class="active"></li>
+											<c:set var="i" value="1" />
+										</c:when>
+										<c:otherwise>
+											<li data-target="#slider-carousel" data-slide-to="1"></li>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</ol>
 
-                        <div class="carousel-inner">
-                            <c:set var="i" value="0"/>
-                            <c:forEach items="${items}" var="item">
-                                <div class="item ${i==0?'active':""}">
-                                    <div class="col-sm-6">
-                                        <h1>
-                                            <span>${item.name}</span>
-                                        </h1>
-                                        <h2>${item.tagLine}</h2>
-                                        <p>${item.description}</p>
-                                        <button type="button" class="btn btn-default get">Get
-                                                ${item.btnText}
-                                        </button>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <c:forEach items="${item.imageUrls}" var="imageUrl">
-                                            <c:set var="image" value="${imageUrl.imageURL}"/>
-                                        </c:forEach>
-                                        <img src="${item.imageUrls.get(0).imageURL}"
-                                             class="girl img-responsive" alt=""/> <img
-                                            src="${item.priceTagImageUrl}" class="pricing"
-                                            alt=""/>
-                                    </div>
-                                </div>
-                                <c:set var="i" value="1"/>
-                            </c:forEach>
-                        </div>
+							<div class="carousel-inner">
+								<c:set var="i" value="0" />
+								<c:forEach items="${items}" var="item">
+									<div class="item ${i==0?'active':""}">
+										<div class="col-sm-6">
+											<h1>
+												<span>${item.name}</span>
+											</h1>
+											<h2>${item.tagLine}</h2>
+											<p>${item.description}</p>
+											<button type="button" class="btn btn-default get">Get
+												${item.btnText}</button>
+										</div>
+										<div class="col-sm-6">
+											<c:forEach items="${item.imageUrls}" var="imageUrl">
+												<c:set var="image" value="${imageUrl.imageURL}" />
+											</c:forEach>
+											<img src="${item.imageUrls.get(0).imageURL}"
+												class="girl img-responsive" alt="" /> <img
+												src="${item.priceTagImageUrl}" class="pricing" alt="" />
+										</div>
+									</div>
+									<c:set var="i" value="1" />
+								</c:forEach>
+							</div>
 
-                        <a href="#slider-carousel" class="left control-carousel hidden-xs"
-                           data-slide="prev"> <i class="fa fa-angle-left"></i>
-                        </a> <a href="#slider-carousel"
-                                class="right control-carousel hidden-xs" data-slide="next"> <i
-                            class="fa fa-angle-right"></i>
-                    </a>
-                    </div>
+							<a href="#slider-carousel"
+								class="left control-carousel hidden-xs" data-slide="prev"> <i
+								class="fa fa-angle-left"></i>
+							</a> <a href="#slider-carousel"
+								class="right control-carousel hidden-xs" data-slide="next">
+								<i class="fa fa-angle-right"></i>
+							</a>
+						</div>
 
-                </div>
-            </div>
-        </div>
-    </section>
-</c:if>
+					</div>
+				</div>
+			</div>
+		</section>
+	</c:if>
 	<!--/slider-->
 
 	<section>
@@ -236,75 +235,85 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<div class="left-sidebar">
-						<h2>Category</h2>
-						<div class="panel-group category-products" id="accordian">
-							<!--category-productsr-->
-							<c:forEach items="${catgories}" var="catgory">
-								<c:if test="${catgory.active}">
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h4 class="panel-title">
-												<c:choose>
-													<c:when test="${catgory.subCategories.size()>0}">
-														<a data-toggle="collapse" data-parent="#accordian"
-															href="${catgory.tergetLink}"> <span
-															class="badge pull-right"><i class="fa fa-plus"></i></span>
-															${catgory.displayName}
-														</a>
-													</c:when>
-													<c:otherwise>
-														<a href="${catgory.tergetLink}">${catgory.displayName}</a>
-													</c:otherwise>
-												</c:choose>
-											</h4>
-										</div>
-										<c:if test="${catgory.subCategories.size()>0}">
-											<div id="${catgory.targetId}" class="panel-collapse collapse">
-												<div class="panel-body">
-													<ul>
-														<c:forEach items="${catgory.subCategories}"
-															var="subCategory">
-															<c:if test="${subCategory.active}">
-																<li><a href="${subCategory.tergetLink}">${subCategory.displayName}</a>
-																</li>
-															</c:if>
-														</c:forEach>
-													</ul>
-												</div>
+						<c:if test="${catgories!=null && catgories.size()>0}">
+							<h2>Category</h2>
+							<div class="panel-group category-products" id="accordian">
+								<!--category-productsr-->
+								<c:forEach items="${catgories}" var="catgory">
+									<c:if test="${catgory.active}">
+										<div class="panel panel-default">
+											<div class="panel-heading">
+												<h4 class="panel-title">
+													<c:choose>
+														<c:when test="${catgory.subCategories.size()>0}">
+															<a data-toggle="collapse" data-parent="#accordian"
+																href="${catgory.tergetLink}"> <span
+																class="badge pull-right"><i class="fa fa-plus"></i></span>
+																${catgory.displayName}
+															</a>
+														</c:when>
+														<c:otherwise>
+															<a href="${catgory.tergetLink}">${catgory.displayName}</a>
+														</c:otherwise>
+													</c:choose>
+												</h4>
 											</div>
-										</c:if>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+											<c:if test="${catgory.subCategories.size()>0}">
+												<div id="${catgory.targetId}"
+													class="panel-collapse collapse">
+													<div class="panel-body">
+														<ul>
+															<c:forEach items="${catgory.subCategories}"
+																var="subCategory">
+																<c:if test="${subCategory.active}">
+																	<li><a href="${subCategory.tergetLink}">${subCategory.displayName}</a>
+																	</li>
+																</c:if>
+															</c:forEach>
+														</ul>
+													</div>
+												</div>
+											</c:if>
+										</div>
+									</c:if>
+								</c:forEach>
+							</div>
+						</c:if>
 						<!--/category-products-->
 
-						<div class="brands_products">
-							<!--brands_products-->
-							<h2>Brands</h2>
-							<div class="brands-name">
-								<ul class="nav nav-pills nav-stacked">
-									<c:forEach items="${brands}" var="brand">
-										<c:if test="${brand.active}">
-											<li><a href="${brand.tergetLink}"><span
-													class="pull-right">(${brand.quantity})</span>${brand.displayName}</a></li>
-										</c:if>
-									</c:forEach>
-								</ul>
+						<c:if test="${brands!=null && brands.size()>0}">
+							<div class="brands_products">
+								<!--brands_products-->
+								<h2>Brands</h2>
+								<div class="brands-name">
+									<ul class="nav nav-pills nav-stacked">
+										<c:forEach items="${brands}" var="brand">
+											<c:if test="${brand.active}">
+												<li><a href="${brand.tergetLink}"><span
+														class="pull-right">(${brand.quantity})</span>${brand.displayName}</a></li>
+											</c:if>
+										</c:forEach>
+									</ul>
+								</div>
 							</div>
-						</div>
+						</c:if>
 						<!--/brands_products-->
 
-						<div class="price-range">
-							<!--price-range-->
-							<h2>Price Range</h2>
-							<div class="well text-center" onclick="priceRange();">
-								<input type="text" class="span2" value="" data-slider-min="0"
-									data-slider-max="600" data-slider-step="5"
-									data-slider-value="[250,450]" id="sl2"> <br /> <b
-									class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
+						<c:if test="${amountLengthSlider!=null}">
+							<div class="price-range">
+								<!--price-range-->
+								<h2>Price Range</h2>
+								<div class="well text-center" onclick="priceRange();">
+									<input type="text" class="span2" value=""
+										data-slider-min="${amountLengthSlider.sliderMinValue}"
+										data-slider-max="${amountLengthSlider.sliderMaxValue}"
+										data-slider-step="5"
+										data-slider-value="[${amountLengthSlider.setMinValue},${amountLengthSlider.setMaxValue}]"
+										id="sl2"> <br /> <b class="pull-left">$ 0</b> <b
+										class="pull-right">$ 600</b>
+								</div>
 							</div>
-						</div>
+						</c:if>
 						<!--/price-range-->
 
 						<div class="shipping text-center">
@@ -810,111 +819,67 @@
 					</div>
 					<!--/category-tab-->
 
-					<div class="recommended_items">
-						<!--recommended_items-->
-						<h2 class="title text-center">recommended items</h2>
 
-						<div id="recommended-item-carousel" class="carousel slide"
-							data-ride="carousel">
-							<div class="carousel-inner">
-								<div class="item active">
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/recommend1.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
+					<c:if
+						test="${recommendedActiveItems!=null || recommendedItems!=null}">
+						<div class="recommended_items">
+							<!--recommended_items-->
+							<h2 class="title text-center">recommended items</h2>
+
+							<div id="recommended-item-carousel" class="carousel slide"
+								data-ride="carousel">
+								<div class="carousel-inner">
+									<div class="item active">
+										<c:forEach items="${recommendedActiveItems}"
+											var="recommendedActiveItem">
+											<div class="col-sm-4">
+												<div class="product-image-wrapper">
+													<div class="single-products">
+														<div class="productinfo text-center">
+															<img
+																src="${recommendedActiveItem.imageUrls.get(0).imageURL}"
+																alt="" />
+															<h2>${recommendedActiveItem.price}</h2>
+															<p>${recommendedActiveItem.name}</p>
+															<a href="#" class="btn btn-default add-to-cart"><i
+																class="fa fa-shopping-cart"></i>Add to cart</a>
+														</div>
+
+													</div>
 												</div>
-
 											</div>
-										</div>
+										</c:forEach>
 									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/recommend2.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
+									<div class="item">
+										<c:forEach items="${recommendedItems}" var="recommendedItem">
+											<div class="col-sm-4">
+												<div class="product-image-wrapper">
+													<div class="single-products">
+														<div class="productinfo text-center">
+															<img src="${recommendedItem.imageUrls.get(0).imageURL}"
+																alt="" />
+															<h2>${recommendedItem.price}</h2>
+															<p>${recommendedItem.name}</p>
+															<a href="#" class="btn btn-default add-to-cart"><i
+																class="fa fa-shopping-cart"></i>Add to cart</a>
+														</div>
 
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/recommend3.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
+													</div>
 												</div>
-
 											</div>
-										</div>
-									</div>
-								</div>
-								<div class="item">
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/recommend1.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/recommend2.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/recommend3.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
+										</c:forEach>
 									</div>
 								</div>
+								<a class="left recommended-item-control"
+									href="#recommended-item-carousel" data-slide="prev"> <i
+									class="fa fa-angle-left"></i>
+								</a> <a class="right recommended-item-control"
+									href="#recommended-item-carousel" data-slide="next"> <i
+									class="fa fa-angle-right"></i>
+								</a>
 							</div>
-							<a class="left recommended-item-control"
-								href="#recommended-item-carousel" data-slide="prev"> <i
-								class="fa fa-angle-left"></i>
-							</a> <a class="right recommended-item-control"
-								href="#recommended-item-carousel" data-slide="next"> <i
-								class="fa fa-angle-right"></i>
-							</a>
 						</div>
-					</div>
+					</c:if>
 					<!--/recommended_items-->
 
 				</div>
@@ -1107,7 +1072,7 @@
 			//var res = str.split(" : ");
 			//alert("selected min range and max range are "+res);   
 
-			$('.span2').data('slider').setValue([ 500, 600 ]);
+			//$('.span2').data('slider').setValue([ 500, 600 ]);
 		}
 		var originalVal;
 		$('.span2').slider().on('slideStart', function(ev) {
@@ -1117,7 +1082,7 @@
 			alert("original" + originalVal);
 			var newVal = $('.span2').data('slider').getValue();
 			if (originalVal != newVal) {
-				alert('Value Changed!' + newVal);
+				//alert('Value Changed!' + newVal);
 			}
 		});
 	</script>

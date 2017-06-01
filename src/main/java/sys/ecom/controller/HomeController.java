@@ -1,14 +1,22 @@
 package sys.ecom.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
-import sys.ecom.components.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import sys.ecom.components.AmountLengthSlider;
+import sys.ecom.components.Brand;
+import sys.ecom.components.Catgory;
+import sys.ecom.components.Item;
+import sys.ecom.components.ItemImageUrl;
+import sys.ecom.components.Menu;
+import sys.ecom.components.SubCategory;
+import sys.ecom.components.SubMenu;
 
 @Controller
 public class HomeController {
@@ -73,6 +81,35 @@ public class HomeController {
             brands.add(brand);
         }
         view.addObject("brands", brands);
+        
+        AmountLengthSlider amountLengthSlider = new AmountLengthSlider();
+        amountLengthSlider.setSetMinValue(500);
+        amountLengthSlider.setSetMaxValue(600);
+        amountLengthSlider.setSliderMinValue(0);
+        amountLengthSlider.setSliderMaxValue(600);
+        view.addObject("amountLengthSlider", amountLengthSlider);
+        
+        List<Item> recommendedItems = new ArrayList<Item>();
+        for (int i = 0; i < 3; i++) {
+        	Item recommendedItem = new Item();
+        	recommendedItem.setName("Easy Polo Black Edition"+" "+i);
+        	recommendedItem.setPrice("Rs. 50");
+        	recommendedItem.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/recommend2.jpg")));
+
+            recommendedItems.add(recommendedItem);
+        }
+        view.addObject("recommendedItems", recommendedItems);
+        
+        List<Item> recommendedActiveItems = new ArrayList<Item>();
+        for (int i = 0; i < 3; i++) {
+        	Item recommendedActiveItem = new Item();
+        	recommendedActiveItem.setName("Easy Polo Black Edition"+" "+i);
+        	recommendedActiveItem.setPrice("Rs. 50");
+        	recommendedActiveItem.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/recommend1.jpg")));
+
+        	recommendedActiveItems.add(recommendedActiveItem);
+        }
+        view.addObject("recommendedActiveItems", recommendedActiveItems);
 
         List<Item> items = new ArrayList<Item>();
         Item item = new Item();
