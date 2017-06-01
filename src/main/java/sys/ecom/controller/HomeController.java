@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import sys.ecom.components.AmountLengthSlider;
@@ -17,6 +18,12 @@ import sys.ecom.components.ItemImageUrl;
 import sys.ecom.components.Menu;
 import sys.ecom.components.SubCategory;
 import sys.ecom.components.SubMenu;
+import sys.ecom.test.TestData;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 @Controller
 public class HomeController {
@@ -152,6 +159,27 @@ public class HomeController {
         view.addObject("items", items);
 
         return view;
+    }
+
+    @GetMapping("/jpa")
+    @ResponseBody
+    public String response(){
+        String str = "";
+        try {
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("inv");
+            EntityManager em = entityManagerFactory.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(new TestData("Debashis", "Haldia"));
+
+            TypedQuery<TestData> query=em.createQuery("select c from TestData c",TestData.class);
+            for(TestData td:query.getResultList()){
+                str = str + td;
+            }
+            em.getTransaction().commit();
+        }catch (Exception e){
+            str = e.getMessage();
+        }
+        return str;
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
