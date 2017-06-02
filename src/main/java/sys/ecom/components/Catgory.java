@@ -9,6 +9,7 @@ public class Catgory {
 	private String targetId;
 	boolean isActive;
 	private List<SubCategory> subCategories;
+	private List<Item> items;
 
 	public String getName() {
 		return name;
@@ -56,6 +57,14 @@ public class Catgory {
 
 	public void setTargetId(String targetId) {
 		this.targetId = targetId;
+	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
 
 }
