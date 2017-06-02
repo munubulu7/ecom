@@ -1,29 +1,20 @@
 package sys.ecom.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import sys.ecom.components.AmountLengthSlider;
-import sys.ecom.components.Brand;
-import sys.ecom.components.Catgory;
-import sys.ecom.components.Item;
-import sys.ecom.components.ItemImageUrl;
-import sys.ecom.components.Menu;
-import sys.ecom.components.SubCategory;
-import sys.ecom.components.SubMenu;
+import sys.ecom.bean.EntityManagerBuilder;
+import sys.ecom.components.*;
 import sys.ecom.test.TestData;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -88,33 +79,33 @@ public class HomeController {
             brands.add(brand);
         }
         view.addObject("brands", brands);
-        
+
         AmountLengthSlider amountLengthSlider = new AmountLengthSlider();
         amountLengthSlider.setSetMinValue(500);
         amountLengthSlider.setSetMaxValue(600);
         amountLengthSlider.setSliderMinValue(0);
         amountLengthSlider.setSliderMaxValue(600);
         view.addObject("amountLengthSlider", amountLengthSlider);
-        
+
         List<Item> recommendedItems = new ArrayList<Item>();
         for (int i = 0; i < 3; i++) {
-        	Item recommendedItem = new Item();
-        	recommendedItem.setName("Easy Polo Black Edition"+" "+i);
-        	recommendedItem.setPrice("Rs. 50");
-        	recommendedItem.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/recommend2.jpg")));
+            Item recommendedItem = new Item();
+            recommendedItem.setName("Easy Polo Black Edition" + " " + i);
+            recommendedItem.setPrice("Rs. 50");
+            recommendedItem.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/recommend2.jpg")));
 
             recommendedItems.add(recommendedItem);
         }
         view.addObject("recommendedItems", recommendedItems);
-        
+
         List<Item> recommendedActiveItems = new ArrayList<Item>();
         for (int i = 0; i < 3; i++) {
-        	Item recommendedActiveItem = new Item();
-        	recommendedActiveItem.setName("Easy Polo Black Edition"+" "+i);
-        	recommendedActiveItem.setPrice("Rs. 50");
-        	recommendedActiveItem.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/recommend1.jpg")));
+            Item recommendedActiveItem = new Item();
+            recommendedActiveItem.setName("Easy Polo Black Edition" + " " + i);
+            recommendedActiveItem.setPrice("Rs. 50");
+            recommendedActiveItem.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/recommend1.jpg")));
 
-        	recommendedActiveItems.add(recommendedActiveItem);
+            recommendedActiveItems.add(recommendedActiveItem);
         }
         view.addObject("recommendedActiveItems", recommendedActiveItems);
 
@@ -161,25 +152,30 @@ public class HomeController {
         return view;
     }
 
-    @GetMapping("/jpa")
-    @ResponseBody
-    public String response(){
-        String str = "";
-        try {
-            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("inv");
-            EntityManager em = entityManagerFactory.createEntityManager();
-            em.getTransaction().begin();
-            em.persist(new TestData("Debashis", "Haldia"));
 
-            TypedQuery<TestData> query=em.createQuery("select c from TestData c",TestData.class);
-            for(TestData td:query.getResultList()){
-                str = str + td;
+    @RequestMapping(value = "/jpa", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public ResponseEntity response() {
+
+        EntityManagerBuilder builder = new EntityManagerBuilder();
+        EntityManager em = builder.buildEntityManager();
+        em.getTransaction().begin();
+        TypedQuery<TestData> query = em.createQuery("select c from TestData c", TestData.class);
+        class T{
+            List<TestData> data;
+            public T(List<TestData> data) {
+                this.data = data;
             }
-            em.getTransaction().commit();
-        }catch (Exception e){
-            str = e.getMessage();
+            public List<TestData> getData() {
+                return data;
+            }
         }
-        return str;
+        return new ResponseEntity(new T(query.getResultList()), HttpStatus.OK);
+    }
+
+    @GetMapping("/datatable")
+    public String dataTable() {
+        return "pipeline";
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)

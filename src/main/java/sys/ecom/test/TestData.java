@@ -3,9 +3,10 @@ package sys.ecom.test;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
-public class TestData {
+public class TestData implements Serializable{
 
 	@Id@GeneratedValue
 	private int id;
@@ -40,10 +41,5 @@ public class TestData {
 		this.address = address;
 	}
 	
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "Id: "+id+"\nName: "+name+"\nAddress: "+address;
-	}
-	
+
 }
