@@ -134,7 +134,7 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<c:forEach items="${menus}" var="menu">
+								<c:forEach items="${homePageDesigner.menus}" var="menu">
 									<c:if test="${menu.active}">
 										<li><a href="${menu.tergetLink}">${menu.displayName}</a>
 											<c:if test="${menu.subMenus.size()>0}">
@@ -164,7 +164,7 @@
 	</header>
 	<!--/header-->
 
-	<c:if test="${items!=null&&items.size()>0}">
+	<c:if test="${homePageDesigner.items!=null&&homePageDesigner.items.size()>0}">
 		<section id="slider">
 			<!--slider-->
 			<div class="container">
@@ -174,7 +174,7 @@
 							data-ride="carousel">
 							<c:set var="i" value="0" />
 							<ol class="carousel-indicators">
-								<c:forEach items="${items}">
+								<c:forEach items="${homePageDesigner.items}">
 									<c:choose>
 										<c:when test="${i==0}">
 											<li data-target="#slider-carousel" data-slide-to="0"
@@ -190,8 +190,8 @@
 
 							<div class="carousel-inner">
 								<c:set var="i" value="0" />
-								<c:forEach items="${items}" var="item">
-									<div class="item ${i==0?'active':""}">
+								<c:forEach items="${homePageDesigner.items}" var="item">
+									<div class="item ${i==0?'active':''}">
 										<div class="col-sm-6">
 											<h1>
 												<span>${item.name}</span>
@@ -235,11 +235,11 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<div class="left-sidebar">
-						<c:if test="${catgories!=null && catgories.size()>0}">
+						<c:if test="${homePageDesigner.catgories!=null && homePageDesigner.catgories.size()>0}">
 							<h2>Category</h2>
 							<div class="panel-group category-products" id="accordian">
 								<!--category-productsr-->
-								<c:forEach items="${catgories}" var="catgory">
+								<c:forEach items="${homePageDesigner.catgories}" var="catgory">
 									<c:if test="${catgory.active}">
 										<div class="panel panel-default">
 											<div class="panel-heading">
@@ -281,13 +281,13 @@
 						</c:if>
 						<!--/category-products-->
 
-						<c:if test="${brands!=null && brands.size()>0}">
+						<c:if test="${homePageDesigner.brands!=null && homePageDesigner.brands.size()>0}">
 							<div class="brands_products">
 								<!--brands_products-->
 								<h2>Brands</h2>
 								<div class="brands-name">
 									<ul class="nav nav-pills nav-stacked">
-										<c:forEach items="${brands}" var="brand">
+										<c:forEach items="${homePageDesigner.brands}" var="brand">
 											<c:if test="${brand.active}">
 												<li><a href="${brand.tergetLink}"><span
 														class="pull-right">(${brand.quantity})</span>${brand.displayName}</a></li>
@@ -299,16 +299,16 @@
 						</c:if>
 						<!--/brands_products-->
 
-						<c:if test="${amountLengthSlider!=null}">
+						<c:if test="${homePageDesigner.amountLengthSlider!=null}">
 							<div class="price-range">
 								<!--price-range-->
 								<h2>Price Range</h2>
 								<div class="well text-center" onclick="priceRange();">
 									<input type="text" class="span2" value=""
-										data-slider-min="${amountLengthSlider.sliderMinValue}"
-										data-slider-max="${amountLengthSlider.sliderMaxValue}"
+										data-slider-min="${homePageDesigner.amountLengthSlider.sliderMinValue}"
+										data-slider-max="${homePageDesigner.amountLengthSlider.sliderMaxValue}"
 										data-slider-step="5"
-										data-slider-value="[${amountLengthSlider.setMinValue},${amountLengthSlider.setMaxValue}]"
+										data-slider-value="[${homePageDesigner.amountLengthSlider.setMinValue},${homePageDesigner.amountLengthSlider.setMaxValue}]"
 										id="sl2"> <br /> <b class="pull-left">$ 0</b> <b
 										class="pull-right">$ 600</b>
 								</div>
@@ -326,11 +326,11 @@
 				</div>
 
 				<div class="col-sm-9 padding-right">
-					<c:if test="${featuresItems!=null && featuresItems.size()>0}">
+					<c:if test="${homePageDesigner.featuresItems!=null && homePageDesigner.featuresItems.size()>0}">
 						<div class="features_items">
 							<!--features_items-->
 							<h2 class="title text-center">Features Items</h2>
-							<c:forEach items="${featuresItems}" var="featuresItem">
+							<c:forEach items="${homePageDesigner.featuresItems}" var="featuresItem">
 								<div class="col-sm-4">
 									<div class="product-image-wrapper">
 										<div class="single-products">
@@ -365,38 +365,27 @@
 					</c:if>
 					<!--features_items-->
 
-					<c:if test="${catgories!=null && catgories.size()>0}">
+					<c:if test="${homePageDesigner.catgories!=null && homePageDesigner.catgories.size()>0}">
 						<div class="category-tab">
 							<!--category-tab-->
 							<div class="col-sm-12">
 								<ul class="nav nav-tabs">
-									<!-- <li class="active"><a href="#tshirt" data-toggle="tab">T-Shirt</a></li>
-									<li><a href="#blazers" data-toggle="tab">Blazers</a></li>
-									<li><a href="#sunglass" data-toggle="tab">Sunglass</a></li>
-									<li><a href="#kids" data-toggle="tab">Kids</a></li>
-									<li><a href="#poloshirt" data-toggle="tab">Polo shirt</a></li> -->
-
-									<c:forEach items="${catgories}" var="catgory" begin="0" end="0">
+									<c:set var="i" value="0" />
+									<c:forEach items="${homePageDesigner.catgories}" var="catgory">
 										<c:if test="${catgory.active}">
-											<li class="active"><a href="${catgory.tergetLink}_body"
-												data-toggle="tab">${catgory.displayName}</a></li>
+											<li class="${i==0?'active':''}"><a
+												href="${catgory.tergetLink}_body" data-toggle="tab">${catgory.displayName}</a></li>
+											<c:set var="i" value="1" />
 										</c:if>
 									</c:forEach>
-									<c:if test="${catgories.size()>1}">
-										<c:forEach items="${catgories}" var="catgory" begin="1"
-											end="${catgories.size()}">
-											<c:if test="${catgory.active}">
-												<li><a href="${catgory.tergetLink}_body"
-													data-toggle="tab">${catgory.displayName}</a></li>
-											</c:if>
-										</c:forEach>
-									</c:if>
 								</ul>
 							</div>
 							<div class="tab-content">
-								<c:forEach items="${catgories}" var="catgory" begin="0" end="0">
+								<c:set var="i" value="0" />
+								<c:forEach items="${homePageDesigner.catgories}" var="catgory">
 									<c:if test="${catgory.active}">
-										<div class="tab-pane fade active in" id="${catgory.targetId}_body">
+										<div class="tab-pane fade ${i==0?'active':''} in"
+											id="${catgory.targetId}_body">
 											<c:if test="${catgory.items.size()>0}">
 												<c:forEach items="${catgory.items}" var="item">
 													<div class="col-sm-3">
@@ -417,341 +406,16 @@
 												</c:forEach>
 											</c:if>
 										</div>
+										<c:set var="i" value="1" />
 									</c:if>
 								</c:forEach>
-								<c:if test="${catgories.size()>1}">
-									<c:forEach items="${catgories}" var="catgory" begin="1"
-										end="${catgories.size()}">
-										<c:if test="${catgory.active}">
-											<div class="tab-pane fade in" id="${catgory.targetId}_body">
-												<c:if test="${catgory.items.size()>0}">
-													<c:forEach items="${catgory.items}" var="item">
-														<div class="col-sm-3">
-															<div class="product-image-wrapper">
-																<div class="single-products">
-																	<div class="productinfo text-center">
-																		<img src="${item.imageUrls.get(0).imageURL}" alt="" />
-																		<h2>${item.price}</h2>
-																		<p>${item.name}</p>
-
-																		<a href="#" class="btn btn-default add-to-cart"><i
-																			class="fa fa-shopping-cart"></i>Add to cart</a>
-																	</div>
-
-																</div>
-															</div>
-														</div>
-													</c:forEach>
-												</c:if>
-											</div>
-										</c:if>
-									</c:forEach>
-								</c:if>
-
-
-								<!-- <div class="tab-pane fade active in" id="tshirt">
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery1.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery2.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery3.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery4.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="tab-pane fade" id="blazers">
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery4.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery3.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery2.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery1.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="tab-pane fade" id="sunglass">
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery3.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery4.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery1.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery2.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="tab-pane fade" id="kids">
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery1.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery2.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery3.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery4.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="tab-pane fade" id="poloshirt">
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery2.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery4.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery3.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-3">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="/resources/images/home/gallery1.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i
-														class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
-								</div>
-							 -->
 							</div>
 						</div>
 					</c:if>
 					<!--/category-tab-->
 
 
-					<c:if
-						test="${recommendedActiveItems!=null || recommendedItems!=null}">
+					<c:if test="${homePageDesigner.recommendedItems!=null && homePageDesigner.recommendedItems.size()>0}">
 						<div class="recommended_items">
 							<!--recommended_items-->
 							<h2 class="title text-center">recommended items</h2>
@@ -760,7 +424,16 @@
 								data-ride="carousel">
 								<div class="carousel-inner">
 									<div class="item active">
-										<c:forEach items="${recommendedItems}" var="recommendedItem"
+										<c:choose>
+											<c:when test="${homePageDesigner.recommendedItems.size() > 2}">
+												<c:set var="endVal" value="2"></c:set>
+											</c:when>
+											<c:otherwise>
+												<c:set var="endVal" value="${homePageDesigner.recommendedItems.size() - 1}"></c:set>
+											</c:otherwise>
+										</c:choose>
+
+										<c:forEach items="${homePageDesigner.recommendedItems}" var="recommendedItem"
 											begin="0" end="${endVal}">
 											<div class="col-sm-4">
 												<div class="product-image-wrapper">
@@ -779,10 +452,10 @@
 											</div>
 										</c:forEach>
 									</div>
-									<c:if test="${recommendedItems.size() > 3}">
+									<c:if test="${homePageDesigner.recommendedItems.size() > 3}">
 										<div class="item">
-											<c:forEach items="${recommendedItems}" var="recommendedItem"
-												begin="3" end="${recommendedItems.size()}">
+											<c:forEach items="${homePageDesigner.recommendedItems}" var="recommendedItem"
+												begin="3" end="${homePageDesigner.recommendedItems.size()}">
 												<div class="col-sm-4">
 													<div class="product-image-wrapper">
 														<div class="single-products">
