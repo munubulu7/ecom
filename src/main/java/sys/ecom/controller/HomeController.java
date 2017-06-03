@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import sys.ecom.bean.EntityManagerBuilder;
 import sys.ecom.components.*;
+import sys.ecom.test.DatatablesDemoEntity;
 import sys.ecom.test.TestData;
+import sys.ecom.util.DataTable;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -193,19 +196,9 @@ public class HomeController {
 		EntityManagerBuilder builder = new EntityManagerBuilder();
 		EntityManager em = builder.buildEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<TestData> query = em.createQuery("select c from TestData c", TestData.class);
-		class T {
-			List<TestData> data;
-
-			public T(List<TestData> data) {
-				this.data = data;
-			}
-
-			public List<TestData> getData() {
-				return data;
-			}
-		}
-		return new ResponseEntity(new T(query.getResultList()), HttpStatus.OK);
+		TypedQuery<DatatablesDemoEntity> query = em.createQuery("select c from DatatablesDemoEntity c", DatatablesDemoEntity.class);
+		DataTable dataTable = new DataTable(query.getResultList(), null, null,DatatablesDemoEntity.class);
+		return new ResponseEntity(dataTable, HttpStatus.OK);
 	}
 
 	@GetMapping("/datatable")
