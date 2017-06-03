@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import sys.ecom.bean.EntityManagerBuilder;
 import sys.ecom.components.*;
-import sys.ecom.test.DatatablesDemoEntity;
+import sys.ecom.portal.HomePageDesigner;
 import sys.ecom.test.TestData;
-import sys.ecom.util.DataTable;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +22,8 @@ public class HomeController {
 	@GetMapping("/app")
 	public ModelAndView index() {
 		ModelAndView view = new ModelAndView("index");
+		
+		HomePageDesigner homePageDesigner = new HomePageDesigner();
 
 		List<Menu> menus = new ArrayList<Menu>();
 		for (int i = 0; i < 5; i++) {
@@ -45,7 +45,8 @@ public class HomeController {
 			}
 			menus.add(menu);
 		}
-		view.addObject("menus", menus);
+		//view.addObject("menus", menus);
+		homePageDesigner.setMenus(menus);
 
 		List<Catgory> catgories = new ArrayList<Catgory>();
 		for (int i = 0; i < 5; i++) {
@@ -81,7 +82,8 @@ public class HomeController {
 			}
 			catgories.add(catgory);
 		}
-		view.addObject("catgories", catgories);
+		//view.addObject("catgories", catgories);
+		homePageDesigner.setCatgories(catgories);
 
 		List<Brand> brands = new ArrayList<Brand>();
 		for (int i = 0; i < 5; i++) {
@@ -94,14 +96,16 @@ public class HomeController {
 
 			brands.add(brand);
 		}
-		view.addObject("brands", brands);
+		//view.addObject("brands", brands);
+		homePageDesigner.setBrands(brands);
 
 		AmountLengthSlider amountLengthSlider = new AmountLengthSlider();
 		amountLengthSlider.setSetMinValue(500);
 		amountLengthSlider.setSetMaxValue(600);
 		amountLengthSlider.setSliderMinValue(0);
 		amountLengthSlider.setSliderMaxValue(600);
-		view.addObject("amountLengthSlider", amountLengthSlider);
+		//view.addObject("amountLengthSlider", amountLengthSlider);
+		homePageDesigner.setAmountLengthSlider(amountLengthSlider);
 
 		List<Item> recommendedItems = new ArrayList<Item>();
 		for (int i = 0; i < 5; i++) {
@@ -121,15 +125,8 @@ public class HomeController {
 
 			recommendedItems.add(recommendedItem);
 		}
-		view.addObject("recommendedItems", recommendedItems);
-
-		int endVal;
-		if (recommendedItems.size() > 2) {
-			endVal = 2;
-		} else {
-			endVal = recommendedItems.size() - 1;
-		}
-		view.addObject("endVal", endVal);
+		//view.addObject("recommendedItems", recommendedItems);
+		homePageDesigner.setRecommendedItems(recommendedItems);
 
 		List<Item> featuresItems = new ArrayList<Item>();
 		for (int i = 0; i < 6; i++) {
@@ -140,7 +137,8 @@ public class HomeController {
 			featuresItem.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/product" + ind + ".jpg")));
 			featuresItems.add(featuresItem);
 		}
-		view.addObject("featuresItems", featuresItems);
+		//view.addObject("featuresItems", featuresItems);
+		homePageDesigner.setFeaturesItems(featuresItems);
 
 		List<Item> items = new ArrayList<Item>();
 		Item item = new Item();
@@ -184,8 +182,10 @@ public class HomeController {
 		items.add(item3);
 
 		// view.addObject("items", null);
-		view.addObject("items", items);
+		//view.addObject("items", items);
+		homePageDesigner.setItems(items);
 
+		view.addObject("homePageDesigner", homePageDesigner);
 		return view;
 	}
 
@@ -196,9 +196,19 @@ public class HomeController {
 		EntityManagerBuilder builder = new EntityManagerBuilder();
 		EntityManager em = builder.buildEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<DatatablesDemoEntity> query = em.createQuery("select c from DatatablesDemoEntity c", DatatablesDemoEntity.class);
-		DataTable dataTable = new DataTable(query.getResultList(), null, null,DatatablesDemoEntity.class);
-		return new ResponseEntity(dataTable, HttpStatus.OK);
+		TypedQuery<TestData> query = em.createQuery("select c from TestData c", TestData.class);
+		class T {
+			List<TestData> data;
+
+			public T(List<TestData> data) {
+				this.data = data;
+			}
+
+			public List<TestData> getData() {
+				return data;
+			}
+		}
+		return new ResponseEntity(new T(query.getResultList()), HttpStatus.OK);
 	}
 
 	@GetMapping("/datatable")
