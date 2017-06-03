@@ -9,7 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 import sys.ecom.bean.EntityManagerBuilder;
 import sys.ecom.components.*;
 import sys.ecom.portal.HomePageDesigner;
-import sys.ecom.test.TestData;
+import sys.ecom.test.DatatablesDemoEntity;
+import sys.ecom.util.DataTable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -19,209 +20,199 @@ import java.util.List;
 
 @Controller
 public class HomeController {
-	@GetMapping("/app")
-	public ModelAndView index() {
-		ModelAndView view = new ModelAndView("index");
-		
-		HomePageDesigner homePageDesigner = new HomePageDesigner();
+    @GetMapping("/app")
+    public ModelAndView index() {
+        ModelAndView view = new ModelAndView("index");
 
-		List<Menu> menus = new ArrayList<Menu>();
-		for (int i = 0; i < 5; i++) {
-			Menu menu = new Menu();
-			menu.setName("Name" + i);
-			menu.setDisplayName("DispName" + i);
-			menu.setActive(i == 3 ? false : true);
-			menu.setTergetLink("#");
-			menu.setSubMenus(new ArrayList<SubMenu>());
-			if (i != 2) {
-				for (int j = 0; j < 5; j++) {
-					SubMenu subMenu = new SubMenu();
-					subMenu.setName("Name" + j);
-					subMenu.setDisplayName("DispSubMenuName" + j);
-					subMenu.setActive(i == j ? false : true);
-					subMenu.setTergetLink("#");
-					menu.getSubMenus().add(subMenu);
-				}
-			}
-			menus.add(menu);
-		}
-		//view.addObject("menus", menus);
-		homePageDesigner.setMenus(menus);
+        HomePageDesigner homePageDesigner = new HomePageDesigner();
 
-		List<Catgory> catgories = new ArrayList<Catgory>();
-		for (int i = 0; i < 5; i++) {
-			Catgory catgory = new Catgory();
-			catgory.setName("Name" + i);
-			catgory.setDisplayName("CategoryName" + i);
-			catgory.setActive(i == 3 ? false : true);
-			catgory.setTargetId("link" + i);
-			catgory.setTergetLink("#" + catgory.getTargetId());
-			catgory.setSubCategories(new ArrayList<SubCategory>());
-			catgory.setItems(new ArrayList<Item>());
-			if (i != 2) {
-				for (int j = 0; j < 5; j++) {
-					SubCategory subCategory = new SubCategory();
-					subCategory.setName("Name" + j);
-					subCategory.setDisplayName("SubCatName" + j);
-					subCategory.setActive(i == j ? false : true);
-					subCategory.setTergetLink("#");
-					catgory.getSubCategories().add(subCategory);
-				}
+        List<Menu> menus = new ArrayList<Menu>();
+        for (int i = 0; i < 5; i++) {
+            Menu menu = new Menu();
+            menu.setName("Name" + i);
+            menu.setDisplayName("DispName" + i);
+            menu.setActive(i == 3 ? false : true);
+            menu.setTergetLink("#");
+            menu.setSubMenus(new ArrayList<SubMenu>());
+            if (i != 2) {
+                for (int j = 0; j < 5; j++) {
+                    SubMenu subMenu = new SubMenu();
+                    subMenu.setName("Name" + j);
+                    subMenu.setDisplayName("DispSubMenuName" + j);
+                    subMenu.setActive(i == j ? false : true);
+                    subMenu.setTergetLink("#");
+                    menu.getSubMenus().add(subMenu);
+                }
+            }
+            menus.add(menu);
+        }
+        //view.addObject("menus", menus);
+        homePageDesigner.setMenus(menus);
 
-				Item itm = new Item();
-				itm.setName("Easy Polo Black Edition" + " " + i);
-				itm.setPrice("Rs. 50");
-				int ind;
-				if (i < 4) {
-					ind = i + 1;
-				} else {
-					ind = i % 4 + 1;
-				}
-				itm.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/gallery" + ind + ".jpg")));
-				catgory.getItems().add(itm);
-			}
-			catgories.add(catgory);
-		}
-		//view.addObject("catgories", catgories);
-		homePageDesigner.setCatgories(catgories);
+        List<Catgory> catgories = new ArrayList<Catgory>();
+        for (int i = 0; i < 5; i++) {
+            Catgory catgory = new Catgory();
+            catgory.setName("Name" + i);
+            catgory.setDisplayName("CategoryName" + i);
+            catgory.setActive(i == 3 ? false : true);
+            catgory.setTargetId("link" + i);
+            catgory.setTergetLink("#" + catgory.getTargetId());
+            catgory.setSubCategories(new ArrayList<SubCategory>());
+            catgory.setItems(new ArrayList<Item>());
+            if (i != 2) {
+                for (int j = 0; j < 5; j++) {
+                    SubCategory subCategory = new SubCategory();
+                    subCategory.setName("Name" + j);
+                    subCategory.setDisplayName("SubCatName" + j);
+                    subCategory.setActive(i == j ? false : true);
+                    subCategory.setTergetLink("#");
+                    catgory.getSubCategories().add(subCategory);
+                }
 
-		List<Brand> brands = new ArrayList<Brand>();
-		for (int i = 0; i < 5; i++) {
-			Brand brand = new Brand();
-			brand.setName("Name" + i);
-			brand.setDisplayName("Brand " + i);
-			brand.setActive(i == 3 ? false : true);
-			brand.setTergetLink("#");
-			brand.setQuantity(5);
+                Item itm = new Item();
+                itm.setName("Easy Polo Black Edition" + " " + i);
+                itm.setPrice("Rs. 50");
+                int ind;
+                if (i < 4) {
+                    ind = i + 1;
+                } else {
+                    ind = i % 4 + 1;
+                }
+                itm.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/gallery" + ind + ".jpg")));
+                catgory.getItems().add(itm);
+            }
+            catgories.add(catgory);
+        }
+        //view.addObject("catgories", catgories);
+        homePageDesigner.setCatgories(catgories);
 
-			brands.add(brand);
-		}
-		//view.addObject("brands", brands);
-		homePageDesigner.setBrands(brands);
+        List<Brand> brands = new ArrayList<Brand>();
+        for (int i = 0; i < 5; i++) {
+            Brand brand = new Brand();
+            brand.setName("Name" + i);
+            brand.setDisplayName("Brand " + i);
+            brand.setActive(i == 3 ? false : true);
+            brand.setTergetLink("#");
+            brand.setQuantity(5);
 
-		AmountLengthSlider amountLengthSlider = new AmountLengthSlider();
-		amountLengthSlider.setSetMinValue(500);
-		amountLengthSlider.setSetMaxValue(600);
-		amountLengthSlider.setSliderMinValue(0);
-		amountLengthSlider.setSliderMaxValue(600);
-		//view.addObject("amountLengthSlider", amountLengthSlider);
-		homePageDesigner.setAmountLengthSlider(amountLengthSlider);
+            brands.add(brand);
+        }
+        //view.addObject("brands", brands);
+        homePageDesigner.setBrands(brands);
 
-		List<Item> recommendedItems = new ArrayList<Item>();
-		for (int i = 0; i < 5; i++) {
-			Item recommendedItem = new Item();
-			recommendedItem.setName("Easy Polo Black Edition" + " " + i);
-			recommendedItem.setPrice("Rs. 50");
+        AmountLengthSlider amountLengthSlider = new AmountLengthSlider();
+        amountLengthSlider.setSetMinValue(500);
+        amountLengthSlider.setSetMaxValue(600);
+        amountLengthSlider.setSliderMinValue(0);
+        amountLengthSlider.setSliderMaxValue(600);
+        //view.addObject("amountLengthSlider", amountLengthSlider);
+        homePageDesigner.setAmountLengthSlider(amountLengthSlider);
 
-			int ind;
-			if (i < 3) {
-				ind = i + 1;
-			} else {
-				ind = i % 3 + 1;
-			}
+        List<Item> recommendedItems = new ArrayList<Item>();
+        for (int i = 0; i < 5; i++) {
+            Item recommendedItem = new Item();
+            recommendedItem.setName("Easy Polo Black Edition" + " " + i);
+            recommendedItem.setPrice("Rs. 50");
 
-			recommendedItem
-					.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/recommend" + ind + ".jpg")));
+            int ind;
+            if (i < 3) {
+                ind = i + 1;
+            } else {
+                ind = i % 3 + 1;
+            }
 
-			recommendedItems.add(recommendedItem);
-		}
-		//view.addObject("recommendedItems", recommendedItems);
-		homePageDesigner.setRecommendedItems(recommendedItems);
+            recommendedItem
+                    .setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/recommend" + ind + ".jpg")));
 
-		List<Item> featuresItems = new ArrayList<Item>();
-		for (int i = 0; i < 6; i++) {
-			Item featuresItem = new Item();
-			featuresItem.setName("Easy Polo Black Edition" + " " + i);
-			featuresItem.setPrice("Rs. 50");
-			int ind = i + 1;
-			featuresItem.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/product" + ind + ".jpg")));
-			featuresItems.add(featuresItem);
-		}
-		//view.addObject("featuresItems", featuresItems);
-		homePageDesigner.setFeaturesItems(featuresItems);
+            recommendedItems.add(recommendedItem);
+        }
+        //view.addObject("recommendedItems", recommendedItems);
+        homePageDesigner.setRecommendedItems(recommendedItems);
 
-		List<Item> items = new ArrayList<Item>();
-		Item item = new Item();
-		item.setName("E-SHOPPER");
-		item.setTagLine("Free E-Commerce Template");
-		item.setDescription(
-				"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ");
-		item.setBtnText("Get it now");
-		item.setPriceTagImageUrl("/resources/images/home/pricing.png");
-		item.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/girl1.jpg")));
-		items.add(item);
+        List<Item> featuresItems = new ArrayList<Item>();
+        for (int i = 0; i < 6; i++) {
+            Item featuresItem = new Item();
+            featuresItem.setName("Easy Polo Black Edition" + " " + i);
+            featuresItem.setPrice("Rs. 50");
+            int ind = i + 1;
+            featuresItem.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/product" + ind + ".jpg")));
+            featuresItems.add(featuresItem);
+        }
+        //view.addObject("featuresItems", featuresItems);
+        homePageDesigner.setFeaturesItems(featuresItems);
 
-		Item item1 = new Item();
-		item1.setName("E-SHOPPER");
-		item1.setTagLine("Free E-Commerce Template");
-		item1.setDescription(
-				"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ");
-		item1.setBtnText("Get it now");
-		item1.setPriceTagImageUrl("/resources/images/home/pricing.png");
-		item1.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/girl2.jpg")));
-		items.add(item1);
+        List<Item> items = new ArrayList<Item>();
+        Item item = new Item();
+        item.setName("E-SHOPPER");
+        item.setTagLine("Free E-Commerce Template");
+        item.setDescription(
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ");
+        item.setBtnText("Get it now");
+        item.setPriceTagImageUrl("/resources/images/home/pricing.png");
+        item.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/girl1.jpg")));
+        items.add(item);
 
-		Item item2 = new Item();
-		item2.setName("E-SHOPPER");
-		item2.setTagLine("Free E-Commerce Template");
-		item2.setDescription(
-				"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ");
-		item2.setBtnText("Get it now");
-		item2.setPriceTagImageUrl("/resources/images/home/pricing.png");
-		item2.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/girl3.jpg")));
-		items.add(item2);
+        Item item1 = new Item();
+        item1.setName("E-SHOPPER");
+        item1.setTagLine("Free E-Commerce Template");
+        item1.setDescription(
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ");
+        item1.setBtnText("Get it now");
+        item1.setPriceTagImageUrl("/resources/images/home/pricing.png");
+        item1.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/girl2.jpg")));
+        items.add(item1);
 
-		Item item3 = new Item();
-		item3.setName("E-SHOPPER");
-		item3.setTagLine("Free E-Commerce Template");
-		item3.setDescription(
-				"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ");
-		item3.setBtnText("Get it now");
-		item3.setPriceTagImageUrl("/resources/images/home/pricing.png");
-		item3.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/girl3.jpg")));
-		items.add(item3);
+        Item item2 = new Item();
+        item2.setName("E-SHOPPER");
+        item2.setTagLine("Free E-Commerce Template");
+        item2.setDescription(
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ");
+        item2.setBtnText("Get it now");
+        item2.setPriceTagImageUrl("/resources/images/home/pricing.png");
+        item2.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/girl3.jpg")));
+        items.add(item2);
 
-		// view.addObject("items", null);
-		//view.addObject("items", items);
-		homePageDesigner.setItems(items);
+        Item item3 = new Item();
+        item3.setName("E-SHOPPER");
+        item3.setTagLine("Free E-Commerce Template");
+        item3.setDescription(
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ");
+        item3.setBtnText("Get it now");
+        item3.setPriceTagImageUrl("/resources/images/home/pricing.png");
+        item3.setImageUrls(Arrays.asList(new ItemImageUrl("/resources/images/home/girl3.jpg")));
+        items.add(item3);
 
-		view.addObject("homePageDesigner", homePageDesigner);
-		return view;
-	}
+        // view.addObject("items", null);
+        //view.addObject("items", items);
+        homePageDesigner.setItems(items);
 
-	@RequestMapping(value = "/jpa", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ResponseBody
-	public ResponseEntity response() {
+        view.addObject("homePageDesigner", homePageDesigner);
+        return view;
+    }
 
-		EntityManagerBuilder builder = new EntityManagerBuilder();
-		EntityManager em = builder.buildEntityManager();
-		em.getTransaction().begin();
-		TypedQuery<TestData> query = em.createQuery("select c from TestData c", TestData.class);
-		class T {
-			List<TestData> data;
+    @RequestMapping(value = "/jpa", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public ResponseEntity response() {
 
-			public T(List<TestData> data) {
-				this.data = data;
-			}
+        EntityManagerBuilder builder = new EntityManagerBuilder();
+        EntityManager em = builder.buildEntityManager();
+        em.getTransaction().begin();
+        TypedQuery<DatatablesDemoEntity> query = em.createQuery("select c from DatatablesDemoEntity c", DatatablesDemoEntity.class);
+        DataTable dataTable = new DataTable(query.getResultList(), null, null, DatatablesDemoEntity.class);
+        return new ResponseEntity(dataTable, HttpStatus.OK);
+    }
 
-			public List<TestData> getData() {
-				return data;
-			}
-		}
-		return new ResponseEntity(new T(query.getResultList()), HttpStatus.OK);
-	}
+    @GetMapping("/datatable")
+    public String dataTable() {
+        return "pipeline";
+    }
 
-	@GetMapping("/datatable")
-	public String dataTable() {
-		return "pipeline";
-	}
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public String error404() {
+        return "404";
+    }
 
-	@ExceptionHandler(ResourceNotFoundException.class)
-	public String error404() {
-		return "404";
-	}
-
-	public class ResourceNotFoundException extends RuntimeException {
-		private static final long serialVersionUID = 1L;
-	}
+    public class ResourceNotFoundException extends RuntimeException {
+        private static final long serialVersionUID = 1L;
+    }
 }
