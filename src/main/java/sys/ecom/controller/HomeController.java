@@ -5,18 +5,17 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
-import sys.ecom.bean.EntityManagerBuilder;
 import sys.ecom.components.*;
 import sys.ecom.portal.HomePageDesigner;
 import sys.ecom.test.DatatablesDemoEntity;
 import sys.ecom.util.DataTable;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -192,13 +191,9 @@ public class HomeController {
 
     @RequestMapping(value = "/jpa", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity response() {
-
-        EntityManagerBuilder builder = new EntityManagerBuilder();
-        EntityManager em = builder.buildEntityManager();
-        em.getTransaction().begin();
-        TypedQuery<DatatablesDemoEntity> query = em.createQuery("select c from DatatablesDemoEntity c", DatatablesDemoEntity.class);
-        DataTable dataTable = new DataTable(query.getResultList(), null, null, DatatablesDemoEntity.class);
+    public ResponseEntity response(WebRequest webRequest) {
+        Map<String, String[]> params = webRequest.getParameterMap();
+        DataTable dataTable = new DataTable(params.get("length"), params.get("start"), params.get("draw"), params.get("column"), DatatablesDemoEntity.class);
         return new ResponseEntity(dataTable, HttpStatus.OK);
     }
 

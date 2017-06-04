@@ -17,7 +17,7 @@ public class EntityManagerBuilder {
         return manager;
     }
 
-    public EntityManager buildEntityManager(){
+    public EntityManager getEntityManager(){
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("inv");
         EntityManager em = entityManagerFactory.createEntityManager();
         return em;

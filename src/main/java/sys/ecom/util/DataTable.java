@@ -1,5 +1,9 @@
 package sys.ecom.util;
 
+import sys.ecom.bean.EntityManagerBuilder;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,24 +13,31 @@ import java.util.List;
  */
 public class DataTable {
     private List data;
-    private List options;
-    private List files;
     private List<Column> columns;
-    private String draw="1";
-    private String recordsTotal="57";
-    private String recordsFiltered="57";
+    private String draw;
+    private String recordsTotal;
+    private String recordsFiltered;
+    private String start;
+    private String length;
 
-    public DataTable(List data, List options, List files, List<Column> columns) {
-        this.data = data;
-        this.options = options;
-        this.files = files;
-        this.columns = columns;
-    }
+    public <T> DataTable(String[] length, String[] start, String[] draw, String[] col, Class t) {
+        if (col == null) {
+            this.length = length[0];
+            this.start = start[0];
+            this.draw = draw[0];
 
-    public <T>DataTable(List<T> data, List options, List files,Class t) {
-        this.data = data;
-        this.options = options;
-        this.files = files;
+            EntityManagerBuilder builder = new EntityManagerBuilder();
+            EntityManager em = builder.getEntityManager();
+
+            Query totalCount = em.createQuery("select count(c) from " + t.getSimpleName() + " c");
+            this.recordsTotal = this.recordsFiltered = String.valueOf(totalCount.getSingleResult());
+
+
+            Query query = em.createQuery("select c from " + t.getSimpleName() + " c");
+            query.setFirstResult(Integer.parseInt(this.start));
+            query.setMaxResults(Integer.parseInt(this.length));
+            this.data = query.getResultList();
+        }
 
         List<Column> columns = new ArrayList<Column>();
         for (Field field : t.getDeclaredFields()) {
@@ -45,22 +56,6 @@ public class DataTable {
 
     public void setData(List data) {
         this.data = data;
-    }
-
-    public List getOptions() {
-        return options;
-    }
-
-    public void setOptions(List options) {
-        this.options = options;
-    }
-
-    public List getFiles() {
-        return files;
-    }
-
-    public void setFiles(List files) {
-        this.files = files;
     }
 
     public List<Column> getColumns() {
@@ -93,6 +88,22 @@ public class DataTable {
 
     public void setRecordsFiltered(String recordsFiltered) {
         this.recordsFiltered = recordsFiltered;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
     }
 
     public class Column {
