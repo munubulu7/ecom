@@ -34,9 +34,9 @@ public class DataTable {
 
 
             Query query = em.createQuery("select c from " + t.getSimpleName() + " c");
-            query.setFirstResult(Integer.parseInt(this.start));
-            query.setMaxResults(Integer.parseInt(this.length));
-            this.data = query.getResultList();
+            query.setFirstResult(Integer.parseInt(getStart()));
+            query.setMaxResults(Integer.parseInt(getLength()));
+            setData(query.getResultList());
         }
 
         List<Column> columns = new ArrayList<Column>();
