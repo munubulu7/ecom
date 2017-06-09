@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import sys.ecom.components.*;
+import sys.ecom.model.Product;
 import sys.ecom.portal.HomePageDesigner;
 import sys.ecom.test.DatatablesDemoEntity;
 import sys.ecom.util.DataTable;
@@ -193,7 +194,7 @@ public class HomeController {
     @ResponseBody
     public ResponseEntity response(WebRequest webRequest) {
         Map<String, String[]> params = webRequest.getParameterMap();
-        DataTable dataTable = new DataTable(params.get("length"), params.get("start"), params.get("draw"), params.get("column"), DatatablesDemoEntity.class);
+        DataTable dataTable = new DataTable(params.get("length"), params.get("start"), params.get("draw"), params.get("column"), Product.class);
         return new ResponseEntity(dataTable, HttpStatus.OK);
     }
 
