@@ -8,16 +8,16 @@ import javax.persistence.Persistence;
  * Created by My System on 6/2/2017.
  */
 public class EntityManagerBuilder {
-    private static EntityManagerBuilder manager = new EntityManagerBuilder();
+    public static EntityManagerBuilder manager = new EntityManagerBuilder();
 
     public EntityManagerBuilder() {
     }
 
-    public EntityManagerBuilder getInstance(){
+    public EntityManagerBuilder getInstance() {
         return manager;
     }
 
-    public EntityManager getEntityManager(){
+    public EntityManager getEntityManager() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("inv");
         EntityManager em = entityManagerFactory.createEntityManager();
         return em;

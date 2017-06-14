@@ -1,8 +1,8 @@
 package sys.ecom.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by My System on 6/7/2017.
@@ -11,7 +11,12 @@ import javax.persistence.Id;
 public class Properties {
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
     private String name;
     private String displayName;
+    private boolean isActive;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDateTime;
+    @OneToMany(mappedBy = "properties", cascade = CascadeType.ALL)
+    private List<ProductProperties> productProperties;
 }

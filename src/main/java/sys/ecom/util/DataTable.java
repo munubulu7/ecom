@@ -26,7 +26,7 @@ public class DataTable {
             this.start = start[0];
             this.draw = draw[0];
 
-            EntityManagerBuilder builder = new EntityManagerBuilder();
+            EntityManagerBuilder builder = EntityManagerBuilder.manager.getInstance();
             EntityManager em = builder.getEntityManager();
 
             Query totalCount = em.createQuery("select count(c) from " + t.getSimpleName() + " c");

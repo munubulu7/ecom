@@ -13,7 +13,7 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
     private String name;
     private String displayName;
     private String description;
@@ -32,9 +32,13 @@ public class Product {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDateTime;
     @ManyToOne
-    @JoinColumn(name = "categoryId")
+    @JoinColumn(name = "subCategoryId")
     @JsonIgnore
-    private Category category;
+    private SubCategory subCategory;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductImage> productImages;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductProperties> productProperties;
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
+    private List<InvoiceProduct> invoiceProducts;
 }

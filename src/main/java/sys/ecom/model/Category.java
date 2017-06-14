@@ -11,15 +11,15 @@ import java.util.List;
 public class Category {
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
     private String name;
     private String displayName;
     private String description;
-    private String tergetLink;
+    private String targetLink;
     private String targetId;
     private boolean isActive;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDateTime;
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<Product> products;
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+    private List<SubCategory> subCategories;
 }

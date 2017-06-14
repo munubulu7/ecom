@@ -7,6 +7,10 @@
 		<class>sys.ecom.model.ProductProperties</class>
 		<class>sys.ecom.model.Properties</class>
 		<class>sys.ecom.model.SubCategory</class>
+		<class>sys.ecom.model.Address</class>
+		<class>sys.ecom.model.Invoice</class>
+		<class>sys.ecom.model.InvoiceProduct</class>
+		<class>sys.ecom.model.User</class>
 		<properties>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC"/>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

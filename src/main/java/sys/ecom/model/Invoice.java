@@ -4,22 +4,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
- * Created by My System on 6/7/2017.
+ * Created by My System on 6/14/2017.
  */
 @Entity
-public class ProductImage {
+public class Invoice {
     @Id
     @GeneratedValue
     private long id;
-    private String name;
-    private String imageUrl;
-    private boolean isActive;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDateTime;
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
+    private List<InvoiceProduct> invoiceProducts;
     @ManyToOne
-    @JoinColumn(name = "productId")
+    @JoinColumn(name = "addressId")
     @JsonIgnore
-    private Product product;
+    private Address billingAddress;
 }
