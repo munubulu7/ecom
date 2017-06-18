@@ -7,7 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+
+import sys.ecom.bean.Transaction;
 import sys.ecom.components.*;
+import sys.ecom.model.Category;
 import sys.ecom.model.Product;
 import sys.ecom.portal.HomePageDesigner;
 import sys.ecom.test.DatatablesDemoEntity;
@@ -20,6 +23,7 @@ import java.util.Map;
 
 @Controller
 public class HomeController {
+	private Transaction tn=Transaction.getInstance();	
     @GetMapping("/app")
     public ModelAndView index() {
         ModelAndView view = new ModelAndView("index");
@@ -194,13 +198,44 @@ public class HomeController {
     @ResponseBody
     public ResponseEntity response(WebRequest webRequest) {
         Map<String, String[]> params = webRequest.getParameterMap();
-        DataTable dataTable = new DataTable(params.get("length"), params.get("start"), params.get("draw"), params.get("column"), Product.class);
+        DataTable dataTable = new DataTable(params.get("length"), params.get("start"), params.get("draw"), params.get("column"), DatatablesDemoEntity.class);
         return new ResponseEntity(dataTable, HttpStatus.OK);
     }
 
     @GetMapping("/datatable")
     public String dataTable() {
         return "pipeline";
+    }
+
+    @GetMapping(value="/insert", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public String insert() {
+    	List<DatatablesDemoEntity> list=tn.getAll(DatatablesDemoEntity.class);
+    	try {
+    		tn.begin();
+			for (int i = 0; i < 1; i++) {
+				System.out.println("inserting for :"+i);
+				for (DatatablesDemoEntity datatablesDemoEntity : list) {
+					DatatablesDemoEntity entity=new DatatablesDemoEntity();
+					entity.setAge(datatablesDemoEntity.getAge());				
+					entity.setFirstName(datatablesDemoEntity.getFirstName());				
+					entity.setEmail(datatablesDemoEntity.getEmail());	
+					entity.setExtn(datatablesDemoEntity.getExtn());
+					entity.setLastName(datatablesDemoEntity.getLastName());
+					entity.setOffice(datatablesDemoEntity.getOffice());
+					entity.setPosition(datatablesDemoEntity.getPosition());
+					entity.setSalary(datatablesDemoEntity.getSalary());
+					entity.setSeq(datatablesDemoEntity.getSeq());
+					entity.setStartDate(datatablesDemoEntity.getStartDate());
+					tn.insertData(entity);
+				} 
+			}
+			tn.commit();
+		} catch (Exception e) {
+			tn.rollback();
+			e.printStackTrace();
+		}
+		return "done";
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
