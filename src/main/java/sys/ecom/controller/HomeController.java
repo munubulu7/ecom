@@ -252,7 +252,7 @@ public class HomeController {
 		List<DatatablesDemoEntity> list = tn.getAll(DatatablesDemoEntity.class);
 		try {
 			tn.begin();
-			for (int i = 0; i < 2000; i++) {
+			for (int i = 0; i < 1; i++) {
 				System.out.println("inserting for :" + i);
 				for (DatatablesDemoEntity datatablesDemoEntity : list) {
 					DatatablesDemoEntity entity = new DatatablesDemoEntity();
