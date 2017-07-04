@@ -276,13 +276,4 @@ public class HomeController {
 		}
 		return "done";
 	}
-
-	@ExceptionHandler(ResourceNotFoundException.class)
-	public String error404() {
-		return "404";
-	}
-
-	public class ResourceNotFoundException extends RuntimeException {
-		private static final long serialVersionUID = 1L;
-	}
 }
